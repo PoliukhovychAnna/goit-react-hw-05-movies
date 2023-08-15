@@ -1,27 +1,35 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
-import getTrendingMovies from 'services/getTrending';
+import { getTrendingMovies } from 'services/API';
 const Home = () => {
   const [movies, setMovies] = useState([]);
-  console.log(movies);
+  const abortCtrl = useRef();
 
   useEffect(() => {
-    getTrendingMovies()
+    if (abortCtrl.current) {
+      abortCtrl.current.abort();
+    }
+
+    abortCtrl.current = new AbortController();
+    getTrendingMovies(abortCtrl.current.signal)
       .then(response => {
         setMovies(response.results);
       })
       .catch(err => console.log(err));
   }, []);
   return (
-    <ul>
-      {movies.map(movie => {
-        return (
-          <li key={movie.id}>
-            <Link to={`movies/${movie.id}`}>{movie.title}</Link>
-          </li>
-        );
-      })}
-    </ul>
+    <>
+      <h1>Trending today </h1>
+      <ul>
+        {movies.map(movie => {
+          return (
+            <li key={movie.id}>
+              <Link to={`movies/${movie.id}`}>{movie.title}</Link>
+            </li>
+          );
+        })}
+      </ul>
+    </>
   );
 };
 
