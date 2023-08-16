@@ -18,12 +18,9 @@ const defaultImg =
 const Movies = () => {
   const [movies, setMovies] = useState(null);
   const [query, setQuery] = useState('');
-  //   const [currentPage, setPage] = useState(1);
   const [error, setError] = useState(null);
-  //   const [isShowButton, setIsShowButton] = useState(false);
   const abortCtrl = useRef();
   const location = useLocation();
-
   const chooseURL = id => {
     return location.pathname === '/movies' ? `${id}` : `movies/${id}`;
   };
