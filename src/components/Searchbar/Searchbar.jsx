@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { Formik } from 'formik';
 import { useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
@@ -33,4 +34,8 @@ export const Searchbar = ({ onQueryChange }) => {
       </StyledForm>
     </Formik>
   );
+};
+
+Searchbar.propTypes = {
+  onQueryChange: PropTypes.func.isRequired,
 };
