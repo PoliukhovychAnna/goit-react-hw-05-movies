@@ -25,7 +25,7 @@ export const MoviesList = styled.ul`
 export const ListItem = styled.li`
   background-color: #ccccff;
   width: 210px;
-  border: 1px solid #ccccff;
+  border: 2px solid #ccccff;
   border-radius: 5px;
   transition: all 300ms cubic-bezier(0.39, 0.575, 0.565, 1);
   background-color: #ccccff;
