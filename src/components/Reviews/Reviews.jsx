@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { getMovieReviews } from 'services/API';
+import { StyledReviews, ListItem } from './StyledReviews';
 
 const Reviews = () => {
   const [reviews, setReviews] = useState([]);
@@ -27,18 +28,18 @@ const Reviews = () => {
   }, [movieId, error]);
 
   return reviews.length > 0 ? (
-    <ul>
+    <StyledReviews>
       {reviews.map(review => (
-        <li key={review.id}>
+        <ListItem key={review.id}>
           <p>
             <b>Author:</b> {review.author}
           </p>
           <p>
             <b>Comment:</b> {review.content}
           </p>
-        </li>
+        </ListItem>
       ))}
-    </ul>
+    </StyledReviews>
   ) : (
     "We don't have any reviews for this movie."
   );

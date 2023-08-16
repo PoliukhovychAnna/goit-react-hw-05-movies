@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { getMovieCast } from 'services/API';
+import { StyledCast, ListItem, Text } from './StyledCast';
 
 const defaultUser =
   'https://static.vecteezy.com/system/resources/previews/001/840/618/original/picture-profile-icon-male-icon-human-or-people-sign-and-symbol-free-vector.jpg';
@@ -29,10 +30,10 @@ const Cast = () => {
   }, [movieId, error]);
 
   return (
-    <ul>
+    <StyledCast>
       {cast.length > 0
         ? cast.map(actor => (
-            <li key={actor.cast_id}>
+            <ListItem key={actor.cast_id}>
               <img
                 src={
                   actor.profile_path !== null
@@ -40,13 +41,15 @@ const Cast = () => {
                     : defaultUser
                 }
                 alt={actor.name}
-                width={150}
+                width={133}
+                height={195}
               />
-              {actor.name} Character: {actor.character}
-            </li>
+              <Text>{actor.name}</Text>
+              <Text> Character: {actor.character}</Text>
+            </ListItem>
           ))
         : "Sorry, there is no information about movie's cast."}
-    </ul>
+    </StyledCast>
   );
 };
 export default Cast;

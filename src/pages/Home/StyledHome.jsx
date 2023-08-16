@@ -26,6 +26,14 @@ export const ListItem = styled.li`
   background-color: #ccccff;
   width: 210px;
   border-radius: 5px;
+  transition: all 300ms cubic-bezier(0.39, 0.575, 0.565, 1);
+  background-color: #ccccff;
+  cursor: pointer;
+  &:hover,
+  :focus {
+    box-shadow: 0px 0px 26px 8px hsl(270, 100%, 60%, 0.664);
+    color: hsla(323, 87%, 50%, 0.664);
+  }
 `;
 
 export const StyledLink = styled(Link)`

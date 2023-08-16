@@ -6,8 +6,9 @@ export const StyledForm = styled(Form)`
 `;
 
 export const StyledField = styled(Field)`
+  border-color: #9933ff;
   margin-top: 30px;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
   margin-left: auto;
   margin-right: auto;
   height: 40px;
@@ -27,12 +28,17 @@ export const Button = styled.button`
   margin-left: auto;
   margin-right: auto;
   cursor: pointer;
-  font-size: 16px;
+  font-size: 18px;
   font-weight: 600;
-  background-color: #ccccff;
   color: black;
+  border-radius: 30px;
+  border: none;
 
-  :hover {
-    background-color: #9933ff;
+  transition: all 300ms cubic-bezier(0.39, 0.575, 0.565, 1);
+  background-color: #ccccff;
+
+  &:hover {
+    box-shadow: 0px 0px 26px 8px hsl(270, 100%, 60%, 0.664);
+    color: hsla(323, 87%, 50%, 0.664);
   }
 `;
