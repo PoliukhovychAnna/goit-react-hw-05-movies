@@ -11,8 +11,9 @@ export const getTrendingMovies = async signal => {
   return response.data;
 };
 
-export const getMovieDetails = async ({ movieId }) => {
+export const getMovieDetails = async ({ movieId }, signal) => {
   const response = await axios.get(`${baseURL}movie/${movieId}`, {
+    signal,
     params: { api_key: API_KEY },
   });
   return response.data;
@@ -39,6 +40,5 @@ export const getMovieByRequest = async (query, signal) => {
     `${baseURL}search/movie?query=${query}&language=en-US&page=1`,
     { signal, params: { api_key: API_KEY } }
   );
-  console.log(response.data);
   return response.data;
 };

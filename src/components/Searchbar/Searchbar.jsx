@@ -1,6 +1,7 @@
-import { Formik, Field, Form } from 'formik';
+import { Formik } from 'formik';
 import { useEffect } from 'react';
 import { useSearchParams } from 'react-router-dom';
+import { StyledField, StyledForm, Button } from './StyledSearchbar';
 
 export const Searchbar = ({ onQueryChange }) => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -21,15 +22,15 @@ export const Searchbar = ({ onQueryChange }) => {
 
   return (
     <Formik initialValues={{ query: '' }} onSubmit={handleSearchSubmit}>
-      <Form>
-        <Field
+      <StyledForm>
+        <StyledField
           name="query"
           type="text"
           placeholder="Movie name"
           required
-        ></Field>
-        <button type="submit">Search</button>
-      </Form>
+        ></StyledField>
+        <Button type="submit">Search</Button>
+      </StyledForm>
     </Formik>
   );
 };

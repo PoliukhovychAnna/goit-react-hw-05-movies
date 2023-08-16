@@ -1,28 +1,41 @@
-import { Suspense, useEffect, useState } from 'react';
+import { Suspense, useEffect, useRef, useState } from 'react';
 import { Link, Outlet, useLocation, useParams } from 'react-router-dom';
 import { getMovieDetails } from 'services/API';
+import { BackLink, Icon } from './StyledMovieDetails';
 
 const defaultImg =
   'https://moviemill.com/template_1/img/default-movie-portrait.jpg';
 const MovieDetails = () => {
   const [movie, setMovie] = useState({});
+  const [error, setError] = useState(null);
   const { movieId } = useParams();
   const location = useLocation();
   const backLinkHref = location?.state?.from ?? '/';
-  // const abortCtrl = useRef();
+  const abortCtrl = useRef();
   useEffect(() => {
-    getMovieDetails({ movieId })
+    if (abortCtrl.current) {
+      abortCtrl.current.abort();
+    }
+
+    abortCtrl.current = new AbortController();
+    getMovieDetails({ movieId }, abortCtrl.current.signal)
       .then(response => {
         setMovie(response);
+        setError(null);
       })
-      .catch(err => console.log(err));
-  }, [movieId]);
-
-  console.log(movie);
+      .catch(err => {
+        if (err.code !== 'ERR_CANCELED') {
+          setError(err.message);
+        }
+      });
+  }, [movieId, error]);
 
   return (
     <>
-      <Link to={backLinkHref}> Back to the list of movies</Link>
+      <BackLink to={backLinkHref}>
+        <Icon />
+        Back to the list of movies
+      </BackLink>
       <h1>
         {movie.title} ({movie.release_date && movie.release_date.slice(0, 4)})
       </h1>

@@ -1,8 +1,20 @@
 import { useEffect, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
 import { getTrendingMovies } from 'services/API';
+import {
+  Container,
+  Heading,
+  MoviesList,
+  ListItem,
+  StyledLink,
+  MovieTitle,
+  Img,
+} from './StyledHome';
+
+const defaultImg =
+  'https://moviemill.com/template_1/img/default-movie-portrait.jpg';
 const Home = () => {
   const [movies, setMovies] = useState([]);
+  const [error, setError] = useState(null);
   const abortCtrl = useRef();
 
   useEffect(() => {
@@ -14,22 +26,38 @@ const Home = () => {
     getTrendingMovies(abortCtrl.current.signal)
       .then(response => {
         setMovies(response.results);
+        setError(null);
       })
-      .catch(err => console.log(err));
-  }, []);
+      .catch(err => {
+        if (err.code !== 'ERR_CANCELED') {
+          setError(err.message);
+        }
+      });
+  }, [error]);
   return (
-    <>
-      <h1>Trending today </h1>
-      <ul>
+    <Container>
+      <Heading>Trending movies today </Heading>
+      <MoviesList>
         {movies.map(movie => {
           return (
-            <li key={movie.id}>
-              <Link to={`movies/${movie.id}`}>{movie.title}</Link>
-            </li>
+            <ListItem key={movie.id}>
+              <StyledLink to={`movies/${movie.id}`}>
+                <Img
+                  src={
+                    movie.poster_path !== null
+                      ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`
+                      : defaultImg
+                  }
+                  alt={movie.title}
+                  width={200}
+                />
+                <MovieTitle>{movie.title}</MovieTitle>
+              </StyledLink>
+            </ListItem>
           );
         })}
-      </ul>
-    </>
+      </MoviesList>
+    </Container>
   );
 };
 

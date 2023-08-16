@@ -4,6 +4,7 @@ import { getMovieReviews } from 'services/API';
 
 const Reviews = () => {
   const [reviews, setReviews] = useState([]);
+  const [error, setError] = useState(null);
   const { movieId } = useParams();
   const abortCtrl = useRef();
   useEffect(() => {
@@ -16,11 +17,14 @@ const Reviews = () => {
     getMovieReviews({ movieId }, abortCtrl.current.signal)
       .then(response => {
         setReviews(response.results);
+        setError(null);
       })
-      .catch(err => console.log(err));
-  }, [movieId]);
-
-  console.log(reviews);
+      .catch(err => {
+        if (err.code !== 'ERR_CANCELED') {
+          setError(err.message);
+        }
+      });
+  }, [movieId, error]);
 
   return reviews.length > 0 ? (
     <ul>

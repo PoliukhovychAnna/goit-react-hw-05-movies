@@ -1,0 +1,51 @@
+import styled from 'styled-components';
+import { Link } from 'react-router-dom';
+
+export const Container = styled.div`
+  padding: 15px;
+`;
+
+export const Heading = styled.h1`
+  font-size: 28px;
+  font-weight: 800;
+  color: #9933ff;
+  text-align: center;
+  margin-bottom: 35px;
+`;
+
+export const MoviesList = styled.ul`
+  padding: 0;
+  justify-content: center;
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 70px;
+  row-gap: 50px;
+`;
+
+export const ListItem = styled.li`
+  background-color: #ccccff;
+  width: 210px;
+  border-radius: 5px;
+`;
+
+export const StyledLink = styled(Link)`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  color: black;
+`;
+
+export const MovieTitle = styled.p`
+  padding: 4px;
+  font-size: 18px;
+  font-weight: 500;
+  width: 200px;
+  justify-content: center;
+  text-align: center;
+`;
+
+export const Img = styled.img`
+  width: 100%;
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
+`;

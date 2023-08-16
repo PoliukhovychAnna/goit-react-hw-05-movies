@@ -7,6 +7,7 @@ const defaultUser =
 
 const Cast = () => {
   const [cast, setCast] = useState([]);
+  const [error, setError] = useState(null);
   const { movieId } = useParams();
   const abortCtrl = useRef();
   useEffect(() => {
@@ -18,11 +19,15 @@ const Cast = () => {
     getMovieCast({ movieId }, abortCtrl.current.signal)
       .then(response => {
         setCast(response.cast);
+        setError(null);
       })
-      .catch(err => console.log(err));
-  }, [movieId]);
+      .catch(err => {
+        if (err.code !== 'ERR_CANCELED') {
+          setError(err.message);
+        }
+      });
+  }, [movieId, error]);
 
-  console.log(cast);
   return (
     <ul>
       {cast.length > 0
