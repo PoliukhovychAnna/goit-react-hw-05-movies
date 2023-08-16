@@ -1,1 +1,0 @@
-{"version":3,"file":"static/js/725.36524827.chunk.js","mappings":"0JAIA,UAJiB,WACf,OAAO,0EACR,C","sources":["components/NotFound.jsx"],"sourcesContent":["const NotFound = () => {\n  return <h1> 'Sorry, there is nothing here for your guery'</h1>;\n};\n\nexport default NotFound;\n"],"names":[],"sourceRoot":""}
