@@ -1,5 +1,6 @@
 import { Suspense } from 'react';
 import { Outlet } from 'react-router-dom';
+import { Loader } from 'components/Loader/Loader';
 import {
   Container,
   Header,
@@ -15,7 +16,7 @@ export const SharedLayout = () => {
           <StyledNavLink to="/movies"> Movies </StyledNavLink>
         </Navigation>
       </Header>
-      <Suspense fallback={<div>Loading page...</div>}>
+      <Suspense fallback={<Loader />}>
         <Outlet />
       </Suspense>
     </Container>

@@ -3,6 +3,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useEffect, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { getMovieByRequest } from 'services/API';
+import { Loader } from 'components/Loader/Loader';
 import { Searchbar } from 'components/Searchbar/Searchbar';
 import {
   Container,
@@ -19,6 +20,7 @@ const Movies = () => {
   const [movies, setMovies] = useState(null);
   const [query, setQuery] = useState('');
   const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
   const abortCtrl = useRef();
   const location = useLocation();
   const chooseURL = id => {
@@ -38,18 +40,22 @@ const Movies = () => {
       abortCtrl.current = new AbortController();
 
       try {
+        setMovies(null);
+        setIsLoading(true);
         const movies = await getMovieByRequest(query, abortCtrl.current.signal);
 
         if (movies.results.length === 0) {
+          setIsLoading(false);
           return toast.error('Sorry, there are no images for your request...', {
             autoClose: 3000,
           });
         }
-
+        setIsLoading(false);
         setMovies(movies);
         setError(null);
       } catch (error) {
         if (error.code !== 'ERR_CANCELED') {
+          setIsLoading(false);
           setError(error.message);
         }
       }
@@ -68,6 +74,7 @@ const Movies = () => {
   return (
     <Container>
       <Searchbar onQueryChange={onQueryChange} />
+      {isLoading && <Loader />}
       {error && <p>{error}</p>}
       {movies && (
         <MoviesList>

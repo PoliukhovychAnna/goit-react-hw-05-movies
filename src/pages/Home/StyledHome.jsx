@@ -25,6 +25,7 @@ export const MoviesList = styled.ul`
 export const ListItem = styled.li`
   background-color: #ccccff;
   width: 210px;
+  height: 414px;
   border: 2px solid #ccccff;
   border-radius: 5px;
   transition: all 300ms cubic-bezier(0.39, 0.575, 0.565, 1);
@@ -55,6 +56,7 @@ export const MovieTitle = styled.p`
 
 export const Img = styled.img`
   width: 100%;
+  height: 315px;
   border-top-right-radius: 5px;
   border-top-left-radius: 5px;
 `;

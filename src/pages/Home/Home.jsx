@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { getTrendingMovies } from 'services/API';
+import { Loader } from 'components/Loader/Loader';
 import {
   Container,
   Heading,
@@ -15,6 +16,7 @@ const defaultImg =
 const Home = () => {
   const [movies, setMovies] = useState([]);
   const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
   const abortCtrl = useRef();
 
   useEffect(() => {
@@ -23,10 +25,12 @@ const Home = () => {
     }
 
     abortCtrl.current = new AbortController();
+    setIsLoading(true);
     getTrendingMovies(abortCtrl.current.signal)
       .then(response => {
         setMovies(response.results);
         setError(null);
+        setIsLoading(false);
       })
       .catch(err => {
         if (err.code !== 'ERR_CANCELED') {
@@ -36,7 +40,8 @@ const Home = () => {
   }, [error]);
   return (
     <Container>
-      <Heading>Trending movies today </Heading>
+      {isLoading && <Loader />}
+      {!isLoading && <Heading>Trending movies today </Heading>}
       <MoviesList>
         {movies.map(movie => {
           return (
